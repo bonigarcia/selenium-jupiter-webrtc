@@ -44,7 +44,7 @@ class TalkyTest extends WebRtcBase {
     final Logger log = getLogger(lookup().lookupClass());
 
     static final String APP_URL = "https://talky.io/";
-    static final int NUM_VIEWERS = 3;
+    static final int NUM_VIEWERS = 11;
     static final int BROWSERS_RATE_SEC = 1;
     static final int SESSION_TIME_SEC = 60;
 
@@ -59,7 +59,8 @@ class TalkyTest extends WebRtcBase {
             @Arguments({ "--use-fake-device-for-media-stream",
                     "--use-fake-ui-for-media-stream" }) ChromeDriver driver,
             @Arguments({ "--use-fake-device-for-media-stream",
-                    "--use-fake-ui-for-media-stream" }) @DockerBrowser(type = CHROME, size = NUM_VIEWERS) List<WebDriver> driverList)
+                    "--use-fake-ui-for-media-stream" })
+            @DockerBrowser(type = CHROME, size = NUM_VIEWERS) List<WebDriver> driverList)
             throws Exception {
         log.debug("Benchmarking WebRTC room at {}", APP_URL);
 
@@ -77,7 +78,6 @@ class TalkyTest extends WebRtcBase {
             log.debug("Entering viewer #{}", i + 1);
             driverList.get(i).get(sessionUrl);
             joinCall(driverList.get(i));
-            // createRoom(driverList.get(i));
             log.debug("Waiting {} seconds for a new viewer", BROWSERS_RATE_SEC);
             waitSeconds(BROWSERS_RATE_SEC);
         }

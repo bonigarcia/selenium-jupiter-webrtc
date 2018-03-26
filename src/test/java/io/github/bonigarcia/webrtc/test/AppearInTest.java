@@ -56,7 +56,8 @@ class AppearInTest extends WebRtcBase {
             @Arguments({ "--use-fake-device-for-media-stream",
                     "--use-fake-ui-for-media-stream" }) ChromeDriver driver,
             @Arguments({ "--use-fake-device-for-media-stream",
-                    "--use-fake-ui-for-media-stream" }) @DockerBrowser(type = CHROME, size = NUM_VIEWERS) List<WebDriver> driverList)
+                    "--use-fake-ui-for-media-stream" })
+            @DockerBrowser(type = CHROME, size = NUM_VIEWERS) List<WebDriver> driverList)
             throws Exception {
         log.debug("Benchmarking WebRTC room at {}", APP_URL);
 
