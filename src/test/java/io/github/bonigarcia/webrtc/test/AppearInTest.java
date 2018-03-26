@@ -18,8 +18,6 @@ package io.github.bonigarcia.webrtc.test;
 
 import static io.github.bonigarcia.BrowserType.CHROME;
 import static java.lang.invoke.MethodHandles.lookup;
-import static java.util.UUID.randomUUID;
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.util.List;
@@ -27,10 +25,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
 import io.github.bonigarcia.Arguments;
@@ -44,8 +40,8 @@ class AppearInTest extends WebRtcBase {
 
     final Logger log = getLogger(lookup().lookupClass());
 
-    static final String APP_URL = "https://appear.in/";
-    static final int NUM_VIEWERS = 3;
+    static final String APP_URL = "https://appear.in/selenium-jupiter";
+    static final int NUM_VIEWERS = 11;
     static final int BROWSERS_RATE_SEC = 1;
     static final int SESSION_TIME_SEC = 60;
 
@@ -62,15 +58,11 @@ class AppearInTest extends WebRtcBase {
             @Arguments({ "--use-fake-device-for-media-stream",
                     "--use-fake-ui-for-media-stream" }) @DockerBrowser(type = CHROME, size = NUM_VIEWERS) List<WebDriver> driverList)
             throws Exception {
-        String roomName = randomUUID().toString();
-        log.debug("Benchmarking WebRTC room at {} (room name {})", APP_URL,
-                roomName);
+        log.debug("Benchmarking WebRTC room at {}", APP_URL);
 
         // Presenter
         driver.get(APP_URL);
         log.debug("Entering presenter");
-        createRoom(driver, roomName);
-        String sessionUrl = getCurrentUrl(driver, APP_URL);
 
         // Open webrtc-internals in new tab
         openWebRtcInternalsInNewTab(driver);
@@ -78,7 +70,7 @@ class AppearInTest extends WebRtcBase {
         // Viewers
         for (int i = 0; i < driverList.size(); i++) {
             log.debug("Entering viewer #{}", i + 1);
-            driverList.get(i).get(sessionUrl);
+            driverList.get(i).get(APP_URL);
             log.debug("Waiting {} seconds for a new viewer", BROWSERS_RATE_SEC);
             waitSeconds(BROWSERS_RATE_SEC);
         }
@@ -89,16 +81,6 @@ class AppearInTest extends WebRtcBase {
 
         // Download WebRC stats
         downloadStats(driver);
-    }
-
-    void createRoom(WebDriver driver, String roomName) {
-        By sessionSelector = By.cssSelector("input");
-        driver.findElement(sessionSelector).sendKeys(roomName);
-
-        By createRoomButton = By.cssSelector("button");
-        WebDriverWait wait = new WebDriverWait(driver, 5); // seconds
-        wait.until(elementToBeClickable(createRoomButton));
-        driver.findElement(createRoomButton).click();
     }
 
 }
