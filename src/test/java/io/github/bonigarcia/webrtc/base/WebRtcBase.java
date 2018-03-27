@@ -46,7 +46,7 @@ public class WebRtcBase {
         sleep(SECONDS.toMillis(seconds));
     }
 
-    public void openWebRtcInternalsInNewTab(WebDriver driver)
+    public void openWebRtcInternals(WebDriver driver)
             throws AWTException {
         String webRtcInternalsUrl = "chrome://webrtc-internals/";
         log.debug("Opening {} in new tab", webRtcInternalsUrl);

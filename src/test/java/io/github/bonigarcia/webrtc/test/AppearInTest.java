@@ -42,7 +42,7 @@ class AppearInTest extends WebRtcBase {
 
     static final String APP_URL = "https://appear.in/selenium-jupiter";
     static final int NUM_VIEWERS = 11;
-    static final int BROWSERS_RATE_SEC = 1;
+    static final int BROWSERS_RATE_SEC = 5;
     static final int SESSION_TIME_SEC = 60;
 
     @BeforeAll
@@ -61,19 +61,19 @@ class AppearInTest extends WebRtcBase {
             throws Exception {
         log.debug("Benchmarking WebRTC room at {}", APP_URL);
 
-        // Presenter
-        driver.get(APP_URL);
-        log.debug("Entering presenter");
+        // Open webrtc-internals in second tab and return to first one
+        openWebRtcInternals(driver);
 
-        // Open webrtc-internals in new tab
-        openWebRtcInternalsInNewTab(driver);
+        // Presenter
+        log.debug("Entering presenter");
+        driver.get(APP_URL);
 
         // Viewers
         for (int i = 0; i < driverList.size(); i++) {
-            log.debug("Entering viewer #{}", i + 1);
-            driverList.get(i).get(APP_URL);
             log.debug("Waiting {} seconds for a new viewer", BROWSERS_RATE_SEC);
             waitSeconds(BROWSERS_RATE_SEC);
+            log.debug("Entering viewer #{}", i + 1);
+            driverList.get(i).get(APP_URL);
         }
 
         // Wait session time

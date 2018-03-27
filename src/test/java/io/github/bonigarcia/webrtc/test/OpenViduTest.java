@@ -43,9 +43,9 @@ class OpenViduTest extends WebRtcBase {
     final Logger log = getLogger(lookup().lookupClass());
 
     static final String APP_URL = "https://demos.openvidu.io/basic-videoconference/";
-    static final int NUM_VIEWERS = 10;
-    static final int BROWSERS_RATE_SEC = 1;
-    static final int SESSION_TIME_SEC = 10;
+    static final int NUM_VIEWERS = 11;
+    static final int BROWSERS_RATE_SEC = 5;
+    static final int SESSION_TIME_SEC = 60;
 
     @BeforeAll
     static void setup() {
@@ -64,21 +64,21 @@ class OpenViduTest extends WebRtcBase {
         String roomName = randomUUID().toString();
         log.debug("Benchmarking WebRTC room at {}", APP_URL);
 
-        // Presenter
-        driver.get(APP_URL);
-        log.debug("Entering presenter");
-        enterRoom(driver, roomName);
-
         // Open webrtc-internals in new tab
-        openWebRtcInternalsInNewTab(driver);
+        openWebRtcInternals(driver);
+
+        // Presenter
+        log.debug("Entering presenter");
+        driver.get(APP_URL);
+        enterRoom(driver, roomName);
 
         // Viewers
         for (int i = 0; i < driverList.size(); i++) {
+            log.debug("Waiting {} seconds for a new viewer", BROWSERS_RATE_SEC);
+            waitSeconds(BROWSERS_RATE_SEC);
             log.debug("Entering viewer #{}", i + 1);
             driverList.get(i).get(APP_URL);
             enterRoom(driverList.get(i), roomName);
-            log.debug("Waiting {} seconds for a new viewer", BROWSERS_RATE_SEC);
-            waitSeconds(BROWSERS_RATE_SEC);
         }
 
         // Wait session time
