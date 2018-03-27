@@ -32,22 +32,34 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
+import io.github.bonigarcia.SeleniumJupiter;
+
 public class WebRtcBase {
 
-    final Logger log = getLogger(lookup().lookupClass());
+    public static final int NUM_VIEWERS = 11;
+    public static final int BROWSERS_RATE_SEC = 5;
+    public static final int SESSION_TIME_SEC = 60;
+
+    public final Logger log = getLogger(lookup().lookupClass());
+
+    @BeforeAll
+    static void setup() {
+        SeleniumJupiter.config().setBrowserSessionTimeoutDuration("5m0s");
+        SeleniumJupiter.config().setDockerStopTimeoutSec(10);
+    }
 
     public void waitSeconds(int seconds) throws InterruptedException {
         sleep(SECONDS.toMillis(seconds));
     }
 
-    public void openWebRtcInternals(WebDriver driver)
-            throws AWTException {
+    public void openWebRtcInternals(WebDriver driver) throws AWTException {
         String webRtcInternalsUrl = "chrome://webrtc-internals/";
         log.debug("Opening {} in new tab", webRtcInternalsUrl);
 
@@ -97,7 +109,7 @@ public class WebRtcBase {
         robot.keyRelease(vkControl);
         robot.keyRelease(VK_T);
     }
-    
+
     public String getCurrentUrl(ChromeDriver driver, String initialUrl) {
         WebDriverWait wait = new WebDriverWait(driver, 10); // seconds
         wait.until(not(urlToBe(initialUrl)));
