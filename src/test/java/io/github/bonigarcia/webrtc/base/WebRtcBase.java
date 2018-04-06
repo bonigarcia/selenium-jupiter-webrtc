@@ -44,7 +44,7 @@ import io.github.bonigarcia.SeleniumJupiter;
 public class WebRtcBase {
 
     public static final int NUM_VIEWERS = 11;
-    public static final int BROWSERS_RATE_SEC = 5;
+    public static final int BROWSERS_RATE_SEC = 1;
     public static final int SESSION_TIME_SEC = 60;
 
     public final Logger log = getLogger(lookup().lookupClass());
@@ -52,7 +52,6 @@ public class WebRtcBase {
     @BeforeAll
     static void setup() {
         SeleniumJupiter.config().setBrowserSessionTimeoutDuration("5m0s");
-        SeleniumJupiter.config().setDockerStopTimeoutSec(10);
     }
 
     public void waitSeconds(int seconds) throws InterruptedException {
