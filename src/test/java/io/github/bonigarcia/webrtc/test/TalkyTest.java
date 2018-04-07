@@ -51,21 +51,22 @@ class TalkyTest extends WebRtcBase {
         // Open webrtc-internals in second tab and return to first one
         openWebRtcInternals(driver);
 
-        // Open URL in first tab
-        driver.get(APP_URL);
-
         // Presenter
-        log.debug("Entering presenter");
+        log.debug("Entering {}", driver);
+        driver.get(APP_URL);
         createRoom(driver);
         String sessionUrl = getCurrentUrl(driver, APP_URL);
 
         // Viewers
-        for (int i = 0; i < driverList.size(); i++) {
-            log.debug("Waiting {} seconds for a new viewer", BROWSERS_RATE_SEC);
+        for (WebDriver wd : driverList) {
+            log.debug("Waiting {} seconds for new browser", BROWSERS_RATE_SEC);
             waitSeconds(BROWSERS_RATE_SEC);
-            log.debug("Entering viewer #{}", i + 1);
-            driverList.get(i).get(sessionUrl);
-            joinCall(driverList.get(i));
+
+            log.debug("Entering {}", wd);
+            execute(() -> {
+                wd.get(sessionUrl);
+                joinCall(wd);
+            });
         }
 
         // Wait session time

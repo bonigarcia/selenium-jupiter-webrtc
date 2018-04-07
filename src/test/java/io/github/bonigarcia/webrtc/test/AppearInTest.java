@@ -49,15 +49,16 @@ class AppearInTest extends WebRtcBase {
         openWebRtcInternals(driver);
 
         // Presenter
-        log.debug("Entering presenter");
-        driver.get(APP_URL);
+        log.debug("Entering {}", driver);
+        execute(() -> driver.get(APP_URL));
 
         // Viewers
-        for (int i = 0; i < driverList.size(); i++) {
-            log.debug("Waiting {} seconds for a new viewer", BROWSERS_RATE_SEC);
+        for (WebDriver wd : driverList) {
+            log.debug("Waiting {} seconds for new browser", BROWSERS_RATE_SEC);
             waitSeconds(BROWSERS_RATE_SEC);
-            log.debug("Entering viewer #{}", i + 1);
-            driverList.get(i).get(APP_URL);
+
+            log.debug("Entering {}", wd);
+            execute(() -> wd.get(APP_URL));
         }
 
         // Wait session time

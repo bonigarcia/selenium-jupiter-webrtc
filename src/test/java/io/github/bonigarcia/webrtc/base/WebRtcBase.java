@@ -21,6 +21,7 @@ import static java.awt.event.KeyEvent.VK_META;
 import static java.awt.event.KeyEvent.VK_T;
 import static java.lang.Thread.sleep;
 import static java.lang.invoke.MethodHandles.lookup;
+import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.apache.commons.lang3.SystemUtils.IS_OS_MAC;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
@@ -31,8 +32,12 @@ import static org.slf4j.LoggerFactory.getLogger;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.ExecutorService;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -44,14 +49,27 @@ import io.github.bonigarcia.SeleniumJupiter;
 public class WebRtcBase {
 
     public static final int NUM_VIEWERS = 11;
-    public static final int BROWSERS_RATE_SEC = 1;
+    public static final int BROWSERS_RATE_SEC = 5;
     public static final int SESSION_TIME_SEC = 60;
 
     public final Logger log = getLogger(lookup().lookupClass());
 
+    public ExecutorService executorService;
+    public long initTime;
+
     @BeforeAll
-    static void setup() {
+    static void setupAll() {
         SeleniumJupiter.config().setBrowserSessionTimeoutDuration("5m0s");
+    }
+
+    @BeforeEach
+    void setupTest() {
+        executorService = newFixedThreadPool(NUM_VIEWERS + 1);
+    }
+
+    @AfterEach
+    void teardown() {
+        executorService.shutdown();
     }
 
     public void waitSeconds(int seconds) throws InterruptedException {
@@ -61,8 +79,8 @@ public class WebRtcBase {
     public void openWebRtcInternals(WebDriver driver) throws AWTException {
         String webRtcInternalsUrl = "chrome://webrtc-internals/";
         log.debug("Opening {} in new tab", webRtcInternalsUrl);
-
         openNewTab(driver, webRtcInternalsUrl);
+        initTime = new Date().getTime();
     }
 
     public void openNewTab(WebDriver driver, String url) throws AWTException {
@@ -85,6 +103,10 @@ public class WebRtcBase {
     }
 
     public void downloadStats(WebDriver driver) throws InterruptedException {
+        // Calculate test time
+        long end = new Date().getTime();
+        log.debug("Test time {} seconds", (end - initTime) / 1000);
+
         // Switch to webrtc-internal tab
         ArrayList<String> list = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(list.get(1));
@@ -115,6 +137,10 @@ public class WebRtcBase {
         String sessionUrl = driver.getCurrentUrl();
         log.debug("Room URL {}", sessionUrl);
         return sessionUrl;
+    }
+
+    public void execute(Runnable task) {
+        executorService.submit(task);
     }
 
 }
