@@ -50,7 +50,7 @@ public class WebRtcBase {
 
     public static final int NUM_VIEWERS = 11;
     public static final int BROWSERS_RATE_SEC = 5;
-    public static final int SESSION_TIME_SEC = 60;
+    public static final int SESSION_TIME_SEC = 30;
 
     public final Logger log = getLogger(lookup().lookupClass());
 
