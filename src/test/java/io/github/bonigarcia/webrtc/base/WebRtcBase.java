@@ -38,13 +38,14 @@ import java.util.concurrent.ExecutorService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
-import io.github.bonigarcia.SeleniumJupiter;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 
 public class WebRtcBase {
 
@@ -57,9 +58,12 @@ public class WebRtcBase {
     public ExecutorService executorService;
     public long initTime;
 
+    @RegisterExtension
+    static SeleniumExtension seleniumExtension = new SeleniumExtension();
+
     @BeforeAll
     static void setupAll() {
-        SeleniumJupiter.config().setBrowserSessionTimeoutDuration("5m0s");
+        seleniumExtension.getConfig().setBrowserSessionTimeoutDuration("5m0s");
     }
 
     @BeforeEach

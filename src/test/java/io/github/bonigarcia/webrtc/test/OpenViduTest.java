@@ -16,23 +16,20 @@
  */
 package io.github.bonigarcia.webrtc.test;
 
-import static io.github.bonigarcia.BrowserType.CHROME;
+import static io.github.bonigarcia.seljup.BrowserType.CHROME;
 import static java.util.UUID.randomUUID;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import io.github.bonigarcia.Arguments;
-import io.github.bonigarcia.DockerBrowser;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.Arguments;
+import io.github.bonigarcia.seljup.DockerBrowser;
 import io.github.bonigarcia.webrtc.base.WebRtcBase;
 
-@ExtendWith(SeleniumExtension.class)
 class OpenViduTest extends WebRtcBase {
 
     static final String APP_URL = "https://demos.openvidu.io/basic-videoconference/";
