@@ -11,7 +11,7 @@ This project contains several tests aimed to assess online WebRTC applications w
 
 ## About
 
-selenium-jupiter-webrtc (Copyright &copy; 2018) is a project by [Boni Garcia] licensed under [Apache 2.0 License]. Comments, questions and suggestions are always very [welcome][selenium-jupiter issues]!
+selenium-jupiter-webrtc (Copyright &copy; 2018-2019) is a project by [Boni Garcia] licensed under [Apache 2.0 License]. Comments, questions and suggestions are always very [welcome][selenium-jupiter issues]!
 
 [Apache 2.0 License]: http://www.apache.org/licenses/LICENSE-2.0
 [appear.in]: https://appear.in/
