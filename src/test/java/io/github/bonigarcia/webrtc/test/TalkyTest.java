@@ -75,15 +75,14 @@ class TalkyTest extends WebRtcBase {
     }
 
     void createRoom(WebDriver driver) {
-        By startChatSelector = By
-                .cssSelector("body > div.container > form > button");
+        By startChatSelector = By.xpath("//button[text()='Start a chat']");
         driver.findElement(startChatSelector).click();
 
         joinCall(driver);
     }
 
     void joinCall(WebDriver driver) {
-        By joinCallSelector = By.cssSelector("#join");
+        By joinCallSelector = By.xpath("//button[text()='Join Call']");
         WebDriverWait wait = new WebDriverWait(driver, 5); // seconds
         wait.until(elementToBeClickable(joinCallSelector));
         driver.findElement(joinCallSelector).click();
