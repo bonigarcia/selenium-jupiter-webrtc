@@ -45,7 +45,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
-import io.github.bonigarcia.seljup.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumJupiter;
 
 public class WebRtcBase {
 
@@ -59,11 +59,11 @@ public class WebRtcBase {
     public long initTime;
 
     @RegisterExtension
-    static SeleniumExtension seleniumExtension = new SeleniumExtension();
+    static SeleniumJupiter seleniumJupiter = new SeleniumJupiter();
 
     @BeforeAll
     static void setupAll() {
-        seleniumExtension.getConfig().setBrowserSessionTimeoutDuration("5m0s");
+        seleniumJupiter.getConfig().setBrowserSessionTimeoutDuration("5m0s");
     }
 
     @BeforeEach
