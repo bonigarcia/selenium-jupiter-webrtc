@@ -42,40 +42,40 @@ class JitsiTest extends WebRtcBase {
                     "--use-fake-ui-for-media-stream" }) ChromeDriver driver,
             @Arguments({ "--use-fake-device-for-media-stream",
                     "--use-fake-ui-for-media-stream" })
-            @DockerBrowser(type = CHROME, size = NUM_VIEWERS) List<WebDriver> driverList)
+            @DockerBrowser(type = CHROME, size = NUM_PEERS) List<WebDriver> driverList)
             throws Exception {
         log.debug("Benchmarking WebRTC room at {}", APP_URL);
 
-        // Open webrtc-internals in second tab and return to first one
+        // 1. Open webrtc-internals
         openWebRtcInternals(driver);
 
-        // Presenter
+        // 2. Enter room with local browser
         log.debug("Entering {}", driver);
         driver.get(APP_URL);
         String roomName = randomUUID().toString();
-        createRoom(driver, roomName, "presenter");
+        createRoom(driver, roomName, "local");
         String sessionUrl = getCurrentUrl(driver, APP_URL);
 
-        // Viewers
-        int numViewer = 1;
+        // 3. Enter room with rest of browsers
+        int numPeers = 1;
         for (WebDriver wd : driverList) {
             log.debug("Waiting {} seconds for new browser", BROWSERS_RATE_SEC);
             waitSeconds(BROWSERS_RATE_SEC);
 
             log.debug("Entering {}", wd);
-            String userName = "viewer" + numViewer;
+            String userName = "peer" + numPeers;
             execute(() -> {
                 wd.get(sessionUrl);
                 joinCall(wd, userName);
             });
-            numViewer++;
+            numPeers++;
         }
 
-        // Wait session time
+        // 4. Wait session time (simulate conversation with all participants)
         log.debug("Waiting {} seconds with all participants", SESSION_TIME_SEC);
         waitSeconds(SESSION_TIME_SEC);
 
-        // Download WebRC stats
+        // 5. Download WebRTC stats
         downloadStats(driver);
     }
 

@@ -49,7 +49,7 @@ import io.github.bonigarcia.seljup.SeleniumJupiter;
 
 public class WebRtcBase {
 
-    public static final int NUM_VIEWERS = 11;
+    public static final int NUM_PEERS = 11;
     public static final int BROWSERS_RATE_SEC = 5;
     public static final int SESSION_TIME_SEC = 30;
 
@@ -68,7 +68,7 @@ public class WebRtcBase {
 
     @BeforeEach
     void setupTest() {
-        executorService = newFixedThreadPool(NUM_VIEWERS + 1);
+        executorService = newFixedThreadPool(NUM_PEERS + 1);
     }
 
     @AfterEach

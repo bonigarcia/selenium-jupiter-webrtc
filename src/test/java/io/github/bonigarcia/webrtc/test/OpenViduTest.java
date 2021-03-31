@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2018 Boni Garcia (http://bonigarcia.github.io/)
+ * (C) Copyright 2021 Boni Garcia (http://bonigarcia.github.io/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,22 +40,22 @@ class OpenViduTest extends WebRtcBase {
                     "--use-fake-ui-for-media-stream" }) ChromeDriver driver,
             @Arguments({ "--use-fake-device-for-media-stream",
                     "--use-fake-ui-for-media-stream" })
-            @DockerBrowser(type = CHROME, size = NUM_VIEWERS) List<WebDriver> driverList)
+            @DockerBrowser(type = CHROME, size = NUM_PEERS) List<WebDriver> driverList)
             throws Exception {
         String roomName = randomUUID().toString();
         log.debug("Benchmarking WebRTC room at {}", APP_URL);
 
-        // Open webrtc-internals in new tab
+        // 1. Open webrtc-internals
         openWebRtcInternals(driver);
 
-        // Presenter
+        // 2. Enter room with local browser
         log.debug("Entering {}", driver);
         execute(() -> {
             driver.get(APP_URL);
             enterRoom(driver, roomName);
         });
 
-        // Viewers
+        // 3. Enter room with rest of browsers
         for (WebDriver wd : driverList) {
             log.debug("Waiting {} seconds for new browser", BROWSERS_RATE_SEC);
             waitSeconds(BROWSERS_RATE_SEC);
@@ -67,11 +67,11 @@ class OpenViduTest extends WebRtcBase {
             });
         }
 
-        // Wait session time
+        // 4. Wait session time (simulate conversation with all participants)
         log.debug("Waiting {} seconds with all participants", SESSION_TIME_SEC);
         waitSeconds(SESSION_TIME_SEC);
 
-        // Download WebRC stats
+        // 5. Download WebRTC stats
         downloadStats(driver);
     }
 
