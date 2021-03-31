@@ -49,9 +49,9 @@ import io.github.bonigarcia.seljup.SeleniumJupiter;
 
 public class WebRtcBase {
 
-    public static final int NUM_PEERS = 11;
+    public static final int NUM_PEERS = 9;
     public static final int BROWSERS_RATE_SEC = 5;
-    public static final int SESSION_TIME_SEC = 30;
+    public static final int SESSION_TIME_SEC = 60;
 
     public final Logger log = getLogger(lookup().lookupClass());
 
