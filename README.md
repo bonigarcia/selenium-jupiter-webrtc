@@ -7,7 +7,6 @@ This project contains several tests aimed to assess online WebRTC applications w
 
 * [Jitsi]
 * [OpenVidu]
-* [Talky]
 
 ## About
 
@@ -20,4 +19,3 @@ Selenium-Jupiter-WebRTC (Copyright &copy; 2018-2021) is a project by [Boni Garci
 [Logo]: https://bonigarcia.github.io/img/selenium-jupiter.png
 [OpenVidu]: https://openvidu.io/
 [Selenium-Jupiter]: https://github.com/bonigarcia/selenium-jupiter
-[Talky]: https://talky.io/
