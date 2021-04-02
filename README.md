@@ -5,6 +5,7 @@
 
 This project contains several tests aimed to assess online WebRTC applications with [Selenium-Jupiter], namely:
 
+* [Janus]
 * [Jitsi]
 * [OpenVidu]
 
@@ -15,6 +16,7 @@ Selenium-Jupiter-WebRTC (Copyright &copy; 2018-2021) is a project by [Boni Garci
 [Apache 2.0 License]: https://www.apache.org/licenses/LICENSE-2.0
 [Boni Garcia]: https://bonigarcia.github.io/
 [GitHub Repository]: https://github.com/bonigarcia/selenium-jupiter-webrtc
+[Janus]: https://janus.conf.meetecho.com/
 [Jitsi]: https://meet.jit.si/
 [Logo]: https://bonigarcia.github.io/img/selenium-jupiter.png
 [OpenVidu]: https://openvidu.io/
