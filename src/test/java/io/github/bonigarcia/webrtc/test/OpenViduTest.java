@@ -35,7 +35,7 @@ class OpenViduTest extends WebRtcBase {
     static final String APP_URL = "https://demos.openvidu.io/basic-videoconference/";
 
     @Test
-    void testOpenVidu(
+    void test(
             @Arguments({ "--use-fake-device-for-media-stream",
                     "--use-fake-ui-for-media-stream" }) ChromeDriver driver,
             @Arguments({ "--use-fake-device-for-media-stream",
@@ -48,14 +48,14 @@ class OpenViduTest extends WebRtcBase {
         // 1. Open webrtc-internals
         openWebRtcInternals(driver);
 
-        // 2. Enter room with local browser
+        // 2. Enter room with local browser (monitor)
         log.debug("Entering {}", driver);
         execute(() -> {
             driver.get(APP_URL);
             enterRoom(driver, roomName);
         });
 
-        // 3. Enter room with rest of browsers
+        // 3. Enter room with dockerized browsers (load)
         for (WebDriver wd : driverList) {
             log.debug("Waiting {} seconds for new browser", BROWSERS_RATE_SEC);
             waitSeconds(BROWSERS_RATE_SEC);
@@ -67,7 +67,7 @@ class OpenViduTest extends WebRtcBase {
             });
         }
 
-        // 4. Wait session time (simulate conversation with all participants)
+        // 4. Wait session time
         log.debug("Waiting {} seconds with all participants", SESSION_TIME_SEC);
         waitSeconds(SESSION_TIME_SEC);
 
