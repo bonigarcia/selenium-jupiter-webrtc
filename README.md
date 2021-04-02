@@ -1,9 +1,9 @@
 [![License badge](https://img.shields.io/badge/license-Apache2-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Twitter](https://img.shields.io/badge/follow-@boni_gg-green.svg)](https://twitter.com/boni_gg)
 
-# Selenium-Jupiter-WebRTC [![][Logo]][GitHub Repository]
+# Selenium-Jupiter WebRTC [![][Logo]][GitHub Repository]
 
-This project contains several tests aimed to assess online WebRTC applications with [Selenium-Jupiter], namely:
+This project contains several tests aimed to assess videoconferencing applications based on WebRTC with [Selenium-Jupiter], namely:
 
 * [Janus]
 * [Jitsi]
