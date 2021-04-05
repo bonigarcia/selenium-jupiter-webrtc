@@ -9,6 +9,12 @@ This project contains several tests aimed to assess videoconferencing applicatio
 * [Jitsi]
 * [OpenVidu]
 
+The requirements to execute these tests are:
+
+* Java 8+
+* Docker
+* Maven or an IDE compatible with JUnit 5 (Eclipse, IntelliJ IDEA, Visual Studio Code, or Apache NetBeans)
+
 ## About
 
 Selenium-Jupiter-WebRTC (Copyright &copy; 2018-2021) is a project by [Boni Garcia] licensed under [Apache 2.0 License].
