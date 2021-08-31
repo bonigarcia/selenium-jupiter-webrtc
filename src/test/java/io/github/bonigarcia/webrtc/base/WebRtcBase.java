@@ -23,7 +23,7 @@ import static java.lang.Thread.sleep;
 import static java.lang.invoke.MethodHandles.lookup;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.apache.commons.lang3.SystemUtils.IS_OS_MAC;
+import static org.apache.commons.lang.SystemUtils.IS_OS_MAC;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
@@ -36,9 +36,8 @@ import java.util.Date;
 import java.util.concurrent.ExecutorService;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -47,6 +46,7 @@ import org.slf4j.Logger;
 
 import io.github.bonigarcia.seljup.SeleniumJupiter;
 
+@ExtendWith(SeleniumJupiter.class)
 public class WebRtcBase {
 
     public static final int NUM_PEERS = 9;
@@ -58,14 +58,6 @@ public class WebRtcBase {
 
     public ExecutorService executorService;
     public long initTime;
-
-    @RegisterExtension
-    static SeleniumJupiter seleniumJupiter = new SeleniumJupiter();
-
-    @BeforeAll
-    static void setupAll() {
-        seleniumJupiter.getConfig().setBrowserSessionTimeoutDuration("5m0s");
-    }
 
     @BeforeEach
     void setupTest() {

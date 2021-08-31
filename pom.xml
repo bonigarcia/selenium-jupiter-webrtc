@@ -9,7 +9,8 @@
     <properties>
         <slf4j.version>1.7.31</slf4j.version>
         <logback.version>1.2.4</logback.version>
-        <selenium-jupiter.version>4.0.0</selenium-jupiter.version>
+        <selenium.version>3.141.59</selenium.version>
+        <selenium-jupiter.version>4.0.1</selenium-jupiter.version>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>
         <hamcrest.version>1.3</hamcrest.version>
 
@@ -35,6 +36,11 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
