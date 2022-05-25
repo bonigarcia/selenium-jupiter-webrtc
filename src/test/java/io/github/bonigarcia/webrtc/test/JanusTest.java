@@ -20,6 +20,7 @@ import static io.github.bonigarcia.seljup.BrowserType.CHROME;
 import static java.util.UUID.randomUUID;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -81,7 +82,8 @@ class JanusTest extends WebRtcBase {
         driver.findElement(By.id("start")).click();
 
         By sessionSelector = By.id("username");
-        WebDriverWait wait = new WebDriverWait(driver, WAIT_TIME_SEC);
+        WebDriverWait wait = new WebDriverWait(driver,
+                Duration.ofSeconds(WAIT_TIME_SEC));
         wait.until(visibilityOfElementLocated(sessionSelector));
 
         driver.findElement(sessionSelector).click();

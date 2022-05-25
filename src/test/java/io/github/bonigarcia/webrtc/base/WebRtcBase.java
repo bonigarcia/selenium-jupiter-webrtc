@@ -23,7 +23,7 @@ import static java.lang.Thread.sleep;
 import static java.lang.invoke.MethodHandles.lookup;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.apache.commons.lang.SystemUtils.IS_OS_MAC;
+import static org.apache.commons.lang3.SystemUtils.IS_OS_MAC;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.urlToBe;
@@ -31,6 +31,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
@@ -85,7 +86,7 @@ public class WebRtcBase {
         sendControlT();
 
         // Wait to the new tab to be opened
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(numberOfWindowsToBe(2));
 
         // Switch to new tab
@@ -129,7 +130,7 @@ public class WebRtcBase {
     }
 
     public String getCurrentUrl(ChromeDriver driver, String initialUrl) {
-        WebDriverWait wait = new WebDriverWait(driver, 10); // seconds
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(not(urlToBe(initialUrl)));
         String sessionUrl = driver.getCurrentUrl();
         log.debug("Room URL {}", sessionUrl);

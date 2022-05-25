@@ -20,6 +20,7 @@ import static io.github.bonigarcia.seljup.BrowserType.CHROME;
 import static java.util.UUID.randomUUID;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -41,8 +42,7 @@ class JitsiTest extends WebRtcBase {
             @Arguments({ "--use-fake-device-for-media-stream",
                     "--use-fake-ui-for-media-stream" }) ChromeDriver driver,
             @Arguments({ "--use-fake-device-for-media-stream",
-                    "--use-fake-ui-for-media-stream" })
-            @DockerBrowser(type = CHROME, size = NUM_PEERS) List<WebDriver> driverList)
+                    "--use-fake-ui-for-media-stream" }) @DockerBrowser(type = CHROME, size = NUM_PEERS) List<WebDriver> driverList)
             throws Exception {
         log.debug("Benchmarking WebRTC room at {}", APP_URL);
 
@@ -98,7 +98,7 @@ class JitsiTest extends WebRtcBase {
         driver.findElement(userSelector).sendKeys(userName);
 
         By joinCallSelector = By.className("action-btn");
-        WebDriverWait wait = new WebDriverWait(driver, 5); // seconds
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(elementToBeClickable(joinCallSelector));
         driver.findElement(joinCallSelector).click();
     }
